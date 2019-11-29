@@ -65,7 +65,11 @@ extension SessionDelegate: URLSessionDownloadDelegate {
             let currentURL = task.currentRequest?.url,
             let downloadTask = manager.fetchTask(currentURL: currentURL)
             else { return }
-        downloadTask.didComplete(task: task, error: error)
+        if let httpResponse = task.response as? HTTPURLResponse, httpResponse.statusCode == 403 {
+            manager.noPermissionsClosure?(downloadTask)
+        } else {
+            downloadTask.didComplete(task: task, error: error)
+        }
     }
     
     

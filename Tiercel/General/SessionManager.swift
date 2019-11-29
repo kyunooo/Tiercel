@@ -53,6 +53,8 @@ public class SessionManager {
             }
         }
     }
+    
+    public var noPermissionsClosure: ((DownloadTask) -> Void)?
 
     private var timer: DispatchSourceTimer?
     
